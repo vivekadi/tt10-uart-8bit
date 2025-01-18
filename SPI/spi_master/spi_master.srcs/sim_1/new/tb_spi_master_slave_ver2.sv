@@ -8,12 +8,12 @@ module tb_spi_master_slave_ver2;
     logic reset;
     logic slave_rx_start;
     logic slave_tx_start;
-    logic [7:0] input_reg_data;
+    logic [31:0] input_reg_data;
     logic dout_miso;
     logic cs_bar;
     logic sclk;
     logic din_mosi;
-    logic [7:0] output_reg_data;
+    logic [31:0] output_reg_data;
     logic rx_valid;
     logic tx_done;
 
@@ -40,13 +40,13 @@ module tb_spi_master_slave_ver2;
     end
 
     // Test output_reg_data and control signals
-    logic [7:0] test_data [0:15];
+    logic [31:0] test_data [0:15];
     integer i;
 
     initial begin
         // Initialize test output_reg_data (e.g., 16 frames with varying channel_id)
         for (i = 0; i <=15; i++) begin
-            test_data[i] = {4'd0, i[3:0]}; // Channel ID is i, output_reg_data is 0xABC
+            test_data[i] = {28'd0, i[3:0]}; // Channel ID is i, output_reg_data is 0xABC
         end
 
         // Initialize signals
@@ -81,9 +81,9 @@ module tb_spi_master_slave_ver2;
             
 
             // Simulate MISO output_reg_data from the ADC
-            repeat (8) begin
+            repeat (32) begin
                 @(posedge sclk); // Wait for falling edge of sclk
-                dout_miso = test_data[i][7]; // Send MSB first
+                dout_miso = test_data[i][31]; // Send MSB first
                 test_data[i] = test_data[i] << 1; // Shift to next bit
             end
 

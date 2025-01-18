@@ -18,12 +18,12 @@ module spi_master_slave_ver2 (
 	input	logic reset;		
 	input 	logic slave_rx_start;       		// rx_start spi transfer
 	input 	logic slave_tx_start;       		// tx_start spi transfer
-	input 	logic [7:0] input_reg_data; 		// 32-bit register output_reg_data write into slave
+	input 	logic [31:0] input_reg_data; 		// 32-bit register output_reg_data write into slave
 	input	logic dout_miso;        			// master In, Slave Out (Data from the ADC)
 	output	logic cs_bar;       				// chip select, active low (to the ADC)
 	output	logic sclk;         				// spi clock - 10 MHz
 	output 	logic din_mosi;         			// spi output_reg_data out - ADC output_reg_data in
-	output	logic [7:0] output_reg_data;  		// output_reg_data 
+	output	logic [31:0] output_reg_data;  		// output_reg_data 
 	output	logic rx_valid;         			// output_reg_data rx valid signal
 	output 	logic tx_done;         				// spi tx completed flag
 	
@@ -32,7 +32,7 @@ module spi_master_slave_ver2 (
     localparam integer CLK_DIV = 10; 					// Divide the system clock to gen sclk
     localparam integer CLK_DIV_BITS = $clog2(CLK_DIV);
     localparam integer WAIT_BITS = $clog2(5*CLK_DIV);
-    localparam integer DATA_WIDTH = 8; 				// 32-bit SPI frame
+    localparam integer DATA_WIDTH = 32; 				// 32-bit SPI frame
     localparam integer DATA_WIDTH_BITS = $clog2(DATA_WIDTH); 				// 32-bit SPI frame
 
 	// State machine
